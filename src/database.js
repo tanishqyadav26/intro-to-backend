@@ -10,9 +10,13 @@ const connectDB = async () => {
     const mongoUri = process.env.MONGODB_URI;
 
     if (!mongoUri || mongoUri === "your_mongodb_connection_string_here") {
-      throw new Error(
-        "MONGODB_URI is not configured in your .env file. Please paste your MongoDB Atlas connection string."
+      console.warn(
+        "\n⚠️  Notice: MONGODB_URI is not yet configured in your .env file."
       );
+      console.warn(
+        "➡️  Paste your MongoDB Atlas connection string in .env to connect to the cloud database.\n"
+      );
+      return false;
     }
 
     // Connect to MongoDB Atlas
@@ -21,9 +25,10 @@ const connectDB = async () => {
     console.log(
       `\n✅ MongoDB connected successfully! DB Host: ${connectionInstance.connection.host}`
     );
+    return true;
   } catch (error) {
     console.error("❌ MongoDB connection FAILED:", error.message);
-    process.exit(1);
+    return false;
   }
 };
 

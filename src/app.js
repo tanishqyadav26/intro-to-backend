@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import mongoose from "mongoose";
 
 // Import route handlers
 import userRoutes from "./routes/user.routes.js";
@@ -20,9 +21,13 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 
 // Health Check / Welcome route
 app.get("/", (req, res) => {
+  const isDbConnected = mongoose.connection.readyState === 1;
   res.status(200).json({
     success: true,
-    message: "🚀 Backend API is running successfully!",
+    message: "🚀 Backend API is running successfully on your laptop!",
+    database: isDbConnected
+      ? "Connected to MongoDB Atlas"
+      : "Pending MongoDB URI in .env (add MONGODB_URI to connect to cloud)",
     endpoints: {
       users: "/api/v1/users",
       posts: "/api/v1/posts",
