@@ -18,6 +18,12 @@ app.use(
 
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
+app.use(express.static("public"));
+
+// Interactive Web Tester Route
+app.get("/test", (req, res) => {
+  res.sendFile("tester.html", { root: "public" });
+});
 
 // Health Check / Welcome route
 app.get("/", (req, res) => {
