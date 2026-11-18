@@ -20,7 +20,9 @@ const connectDB = async () => {
     }
 
     // Connect to MongoDB Atlas
-    const connectionInstance = await mongoose.connect(`${mongoUri}/${DB_NAME}`);
+    const connectionInstance = await mongoose.connect(mongoUri, {
+      dbName: DB_NAME,
+    });
 
     console.log(
       `\n✅ MongoDB connected successfully! DB Host: ${connectionInstance.connection.host}`
